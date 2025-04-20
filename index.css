@@ -6,6 +6,27 @@ body {
     font-family: 'Smythe';
 }
 
+header {
+    padding: 2em;
+    background-image: url(/header-bg.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+h1, h2 {
+    color: #ffffee;
+    font-weight: normal;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-block-end: 1.25rem;
+}
+
+h2 {
+    font-size: 1.375rem;
+}
+
 #app {
     display: flex;
     flex-direction: column;
