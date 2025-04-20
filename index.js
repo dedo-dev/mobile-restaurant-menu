@@ -19,10 +19,10 @@ document.getElementById('order-menu').innerHTML = renderMenu
 
 document.getElementById('order-item').innerHTML = `
     <h2 style="color: black">Your Order</h2>
-    <article>
+    <div class="order-wrapper">
         <p>Pizza</p>
         <p>Beer</p>
-    </article>
+    </div>
 
     <p>Total price:</p>
     <button>Complete order</button>
