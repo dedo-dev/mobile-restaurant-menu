@@ -1,3 +1,59 @@
-body {
+* {
     margin: 0;
-} 
+}
+
+body {
+    font-family: 'Smythe';
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    gap: 2.375rem;
+    padding: 2em;
+}
+
+.menu {
+    display: flex;
+    gap: 2rem;
+    align-items: start;
+    padding-block-end: 3em;
+    border-block-end: 2px solid #C6C6C6;
+}
+
+.menu__emoji {
+    font-size: 2.5rem;
+}
+
+.menu__content {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.menu__name {
+    font-size: 1.75rem;
+    font-weight: normal;
+}
+
+.menu__ingredient {
+    font-size: .875rem;
+    font-weight: normal;
+    color: #8B8B8B;
+}
+
+.menu__price {
+    font-weight: normal;
+    font-size: 1.25rem;
+}
+
+button {
+    background: transparent;
+    color: #3C3C3C;
+    width: 3.125rem;
+    height: 3.125rem;
+    margin-inline-start: auto;
+    font-size: 2rem;
+    border: 1px solid #DEDEDE;
+    border-radius: 99px;
+}
