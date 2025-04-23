@@ -1,8 +1,7 @@
 import {menuArray} from '/data.js'
 
-let renderMenu = ''
 menuArray.forEach(item => {
-    renderMenu += `
+    document.getElementById('order-menu').innerHTML += `
         <article class="menu">
             <p class="menu__emoji">${item.emoji}</p>
             <div class="menu__content">
@@ -10,20 +9,64 @@ menuArray.forEach(item => {
                 <h4 class="menu__ingredient">${item.ingredients.join(', ')}</h4>
                 <p class="menu__price">$${item.price}</p>
             </div>
-            <button id="menu-btn" class="menu__btn">+</button>
+            <button data-order="${item.id}" id="menu-btn" class="menu__btn">+</button>
         </article>
     `
 })
 
-document.getElementById('order-menu').innerHTML = renderMenu
+let orderArray = []
+document.addEventListener('click', function(e) {
+    if(e.target.dataset.order) {
+        getItem(e.target.dataset.order)
+        renderOrder()
+    }
+})
 
-document.getElementById('order-item').innerHTML = `
-    <h2 style="color: black">Your Order</h2>
-    <div class="order-wrapper">
-        <p>Pizza</p>
-        <p>Beer</p>
-    </div>
+function getItem(itemId) {
+    const targetOrderObj = menuArray.filter(function(item) {
+        return item.id === Number(itemId)
+    })[0]
+    orderArray.push(targetOrderObj)
+}
 
-    <p>Total price:</p>
-    <button>Complete order</button>
-`
+// function getTotalPrice(totalPrice) {
+//     orderArray.reduce((total, currentValue) => {
+//         console.log(total + currentValue)
+//     })
+//     return totalPrice
+// }
+
+
+function renderOrder() {
+    let totalPriceArray = []
+    let totalPrice
+
+
+    document.getElementById('order-item').innerHTML = `
+        <h2>Your Order</h2>
+        <div id="order-wrapper" class="order-wrapper"></div>
+        <div class="order-wrapper__item">
+            <p>Total price:</p>
+            <p class="order-wrapper__item-price">$</p>
+        </div>
+        <button class="order-wrapper__btn">Complete order</button>
+    `
+    // if(orderArray.length > 0) {
+        orderArray.forEach(item => {
+            document.getElementById('order-wrapper').innerHTML += `
+                <div class="order-wrapper__item">
+                    <div class="order-wrapper__content">
+                        <p>${item.name}</p>
+                        <button class="order-wrapper__item-btn">remove</button>
+                    </div>
+                    <p class="order-wrapper__item-price">$${item.price}</p>
+                </div>
+            `
+            totalPriceArray.push(item.price)
+        })
+        totalPrice = totalPriceArray.reduce((totalPrice, currentPrice) => {
+            return totalPrice + currentPrice
+        })
+    // }
+    console.log(totalPrice)
+}
