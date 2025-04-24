@@ -1,4 +1,6 @@
 import {menuArray} from '/data.js'
+const orderArray = []
+const orderPriceArray = []
 
 menuArray.forEach(item => {
     document.getElementById('order-menu').innerHTML += `
@@ -14,12 +16,14 @@ menuArray.forEach(item => {
     `
 })
 
-const orderArray = []
-const orderPriceArray = []
-
 document.addEventListener('click', function(e) {
     if(e.target.dataset.addItem) {
         getItem(e.target.dataset.addItem)
+        renderOrder()
+    }
+
+    if(e.target.dataset.removeItem) {
+        removeItemFromOrder(e.target.dataset.removeItem)
         renderOrder()
     }
 })
@@ -32,32 +36,41 @@ function getItem(itemId) {
     orderPriceArray.push(targetOrderObj.price)
 }
 
+function removeItemFromOrder(itemId) {
+    const targetOrderObj = menuArray.filter(function(item) {
+        return item.id === Number(itemId)
+    })[0]
+    orderArray.pop(targetOrderObj)
+    orderPriceArray.pop(targetOrderObj.price)
+}
+
 function renderOrder() {
-    const totalPrice = orderPriceArray.reduce((totalPrice, currentPrice) => {
-        return totalPrice + currentPrice
-    })
-
-    document.getElementById('order-item').innerHTML = `
-        <h2>Your Order</h2>
-        <div id="order-wrapper" class="order-wrapper"></div>
-        <div class="order-wrapper__item">
-            <p>Total price:</p>
-            <p class="order-wrapper__item-price">$${totalPrice}</p>
-        </div>
-        <button class="order-wrapper__btn">Complete order</button>
-    `
-    orderArray.forEach(item => {
-        document.getElementById('order-wrapper').innerHTML += `
+    if(orderArray.length > 0) {
+        document.getElementById('order-item').classList.remove('d-none')
+        const totalPrice = orderPriceArray.reduce((totalPrice, currentPrice) => {
+            return totalPrice + currentPrice
+        })
+        document.getElementById('order-item').innerHTML = `
+            <h2>Your Order</h2>
+            <div id="order-wrapper" class="order-wrapper"></div>
             <div class="order-wrapper__item">
-                <div class="order-wrapper__content">
-                    <p>${item.name}</p>
-                    <button data-remove-item="${item.id}" class="order-wrapper__item-btn">remove</button>
-                </div>
-                <p class="order-wrapper__item-price">$${item.price}</p>
+                <p>Total price:</p>
+                <p class="order-wrapper__item-price">$${totalPrice}</p>
             </div>
+            <button class="order-wrapper__btn">Complete order</button>
         `
-    })
-
-    console.log(orderPriceArray)
-    console.log(totalPrice)
+        orderArray.forEach(item => {
+            document.getElementById('order-wrapper').innerHTML += `
+                <div class="order-wrapper__item">
+                    <div class="order-wrapper__content">
+                        <p>${item.name}</p>
+                        <button data-remove-item="${item.id}" class="order-wrapper__item-btn">remove</button>
+                    </div>
+                    <p class="order-wrapper__item-price">$${item.price}</p>
+                </div>
+            `
+        })
+    } else {
+        document.getElementById('order-item').classList.add('d-none')
+    }
 }
