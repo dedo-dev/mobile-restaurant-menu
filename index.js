@@ -9,7 +9,7 @@ menuArray.forEach(item => {
                 <h4 class="menu__ingredient">${item.ingredients.join(', ')}</h4>
                 <p class="menu__price">$${item.price}</p>
             </div>
-            <button data-order="${item.id}" id="menu-btn" class="menu__btn">+</button>
+            <button data-add-item="${item.id}" id="menu-btn" class="menu__btn">+</button>
         </article>
     `
 })
@@ -18,8 +18,8 @@ const orderArray = []
 const orderPriceArray = []
 
 document.addEventListener('click', function(e) {
-    if(e.target.dataset.order) {
-        getItem(e.target.dataset.order)
+    if(e.target.dataset.addItem) {
+        getItem(e.target.dataset.addItem)
         renderOrder()
     }
 })
@@ -51,7 +51,7 @@ function renderOrder() {
             <div class="order-wrapper__item">
                 <div class="order-wrapper__content">
                     <p>${item.name}</p>
-                    <button class="order-wrapper__item-btn">remove</button>
+                    <button data-remove-item="${item.id}" class="order-wrapper__item-btn">remove</button>
                 </div>
                 <p class="order-wrapper__item-price">$${item.price}</p>
             </div>
