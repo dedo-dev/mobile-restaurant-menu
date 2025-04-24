@@ -74,3 +74,22 @@ function renderOrder() {
         document.getElementById('order-item').classList.add('d-none')
     }
 }
+
+function renderPaymentModal() {
+    return `
+        <div class="payment-modal">
+            <h1 class="payment-modal__heading">Enter card details</h1>
+            <form>
+                <label>Card older fullname
+                    <input type="text" id="" name="card-name" required>
+                </label>
+                <label>Card number
+                    <input type="number" id="" name="card-number" length="15" required>
+                </label>
+                <label>CVV number
+                    <input type="number" id="" name="card-cvv" length="3" required>
+                </label>
+            </form>
+        </div>
+    `
+}
