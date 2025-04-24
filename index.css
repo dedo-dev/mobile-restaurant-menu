@@ -136,3 +136,7 @@ main {
 .order-wrapper__item-price {
     font-size: 1.25rem;
 }
+
+.d-none {
+    display: none;
+}
