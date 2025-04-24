@@ -14,7 +14,9 @@ menuArray.forEach(item => {
     `
 })
 
-let orderArray = []
+const orderArray = []
+const orderPriceArray = []
+
 document.addEventListener('click', function(e) {
     if(e.target.dataset.order) {
         getItem(e.target.dataset.order)
@@ -27,46 +29,35 @@ function getItem(itemId) {
         return item.id === Number(itemId)
     })[0]
     orderArray.push(targetOrderObj)
+    orderPriceArray.push(targetOrderObj.price)
 }
 
-// function getTotalPrice(totalPrice) {
-//     orderArray.reduce((total, currentValue) => {
-//         console.log(total + currentValue)
-//     })
-//     return totalPrice
-// }
-
-
 function renderOrder() {
-    let totalPriceArray = []
-    let totalPrice
-
+    const totalPrice = orderPriceArray.reduce((totalPrice, currentPrice) => {
+        return totalPrice + currentPrice
+    })
 
     document.getElementById('order-item').innerHTML = `
         <h2>Your Order</h2>
         <div id="order-wrapper" class="order-wrapper"></div>
         <div class="order-wrapper__item">
             <p>Total price:</p>
-            <p class="order-wrapper__item-price">$</p>
+            <p class="order-wrapper__item-price">$${totalPrice}</p>
         </div>
         <button class="order-wrapper__btn">Complete order</button>
     `
-    // if(orderArray.length > 0) {
-        orderArray.forEach(item => {
-            document.getElementById('order-wrapper').innerHTML += `
-                <div class="order-wrapper__item">
-                    <div class="order-wrapper__content">
-                        <p>${item.name}</p>
-                        <button class="order-wrapper__item-btn">remove</button>
-                    </div>
-                    <p class="order-wrapper__item-price">$${item.price}</p>
+    orderArray.forEach(item => {
+        document.getElementById('order-wrapper').innerHTML += `
+            <div class="order-wrapper__item">
+                <div class="order-wrapper__content">
+                    <p>${item.name}</p>
+                    <button class="order-wrapper__item-btn">remove</button>
                 </div>
-            `
-            totalPriceArray.push(item.price)
-        })
-        totalPrice = totalPriceArray.reduce((totalPrice, currentPrice) => {
-            return totalPrice + currentPrice
-        })
-    // }
+                <p class="order-wrapper__item-price">$${item.price}</p>
+            </div>
+        `
+    })
+
+    console.log(orderPriceArray)
     console.log(totalPrice)
 }
