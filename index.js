@@ -24,7 +24,6 @@ document.addEventListener('click', function(e) {
 
     if(e.target.dataset.removeItem) {
         removeItemFromOrder(e.target.dataset.removeItem)
-
         if(orderArray.length > 0 ) {
             renderOrder()
         }
@@ -52,7 +51,6 @@ function removeItemFromOrder(itemId) {
 
 function renderOrder() {
     if(orderArray.length > 0) {
-        // document.getElementById('order-item').classList.remove('d-none')
         const totalPrice = orderPriceArray.reduce((totalPrice, currentPrice) => {
             return totalPrice + currentPrice
         })
@@ -77,9 +75,6 @@ function renderOrder() {
             `
         })
     }
-    // else {
-    //     document.getElementById('order-item').classList.add('d-none')
-    // }
 
     document.getElementById('order-btn').addEventListener('click', () => {
         renderPaymentModal()
