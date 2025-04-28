@@ -24,7 +24,10 @@ document.addEventListener('click', function(e) {
 
     if(e.target.dataset.removeItem) {
         removeItemFromOrder(e.target.dataset.removeItem)
-        renderOrder()
+
+        if(orderArray.length > 0 ) {
+            renderOrder()
+        }
     }
 })
 
@@ -42,11 +45,14 @@ function removeItemFromOrder(itemId) {
     })[0]
     orderArray.pop(targetOrderObj)
     orderPriceArray.pop(targetOrderObj.price)
+    if(orderArray.length === 0 ) {
+        document.getElementById('order-item').innerHTML = ``
+    }
 }
 
 function renderOrder() {
     if(orderArray.length > 0) {
-        document.getElementById('order-item').classList.remove('d-none')
+        // document.getElementById('order-item').classList.remove('d-none')
         const totalPrice = orderPriceArray.reduce((totalPrice, currentPrice) => {
             return totalPrice + currentPrice
         })
@@ -70,9 +76,10 @@ function renderOrder() {
                 </div>
             `
         })
-    } else {
-        document.getElementById('order-item').classList.add('d-none')
     }
+    // else {
+    //     document.getElementById('order-item').classList.add('d-none')
+    // }
 
     document.getElementById('order-btn').addEventListener('click', () => {
         renderPaymentModal()
@@ -93,25 +100,26 @@ function renderPaymentModal() {
                 <label>CVV number
                     <input type="text" id="" name="card-cvv" minlength="3" maxlength="3" required />
                 </label>
-                <button class="payment-modal__btn" id="btn" type="submit">Pay</button>
+                <button class="payment-modal__btn" id="btn">Pay</button>
             </form>
         </div>
     `
     document.getElementById('btn').addEventListener('click', () => {
         preventDefault()
         orderCompleted()
+        console.log('Order completed')
         // document.getElementById('payment-modal').classList.remove('d-none')
     })
 }
 
 function orderCompleted() {
     setTimeout(function() {
-        document.getElementById('order-wrapper').innerHTML = `
+        document.getElementById('order-item').innerHTML = `
         <p style="color: black">Thanks, James! Your order is on its way!</p>
         `
     }, 1500)
 
-    renderOrder()
+    // renderOrder()
 }
 
 
