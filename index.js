@@ -57,7 +57,7 @@ function renderOrder() {
                 <p>Total price:</p>
                 <p class="order-wrapper__item-price">$${totalPrice}</p>
             </div>
-            <button class="order-wrapper__btn">Complete order</button>
+            <button id="order-btn" class="order-wrapper__btn">Complete order</button>
         `
         orderArray.forEach(item => {
             document.getElementById('order-wrapper').innerHTML += `
@@ -73,23 +73,49 @@ function renderOrder() {
     } else {
         document.getElementById('order-item').classList.add('d-none')
     }
+
+    document.getElementById('order-btn').addEventListener('click', () => {
+        renderPaymentModal()
+    })
 }
 
 function renderPaymentModal() {
-    return `
-        <div class="payment-modal">
+    document.querySelector('main').innerHTML += `
+        <div id="payment-modal" class="payment-modal">
             <h1 class="payment-modal__heading">Enter card details</h1>
             <form>
                 <label>Card older fullname
-                    <input type="text" id="" name="card-name" required>
+                    <input type="text" id="" name="card-name" required />
                 </label>
                 <label>Card number
-                    <input type="number" id="" name="card-number" length="15" required>
+                    <input type="text" id="" name="card-number" minlength="15" maxlength="15" required />
                 </label>
                 <label>CVV number
-                    <input type="number" id="" name="card-cvv" length="3" required>
+                    <input type="text" id="" name="card-cvv" minlength="3" maxlength="3" required />
                 </label>
+                <button class="payment-modal__btn" id="btn" type="submit">Pay</button>
             </form>
         </div>
     `
+    document.getElementById('btn').addEventListener('click', () => {
+        preventDefault()
+        orderCompleted()
+        // document.getElementById('payment-modal').classList.remove('d-none')
+    })
+}
+
+function orderCompleted() {
+    setTimeout(function() {
+        document.getElementById('order-wrapper').innerHTML = `
+        <p style="color: black">Thanks, James! Your order is on its way!</p>
+        `
+    }, 1500)
+
+    renderOrder()
+}
+
+
+
+function preventDefault(e) {
+    e.preventDefault()
 }
