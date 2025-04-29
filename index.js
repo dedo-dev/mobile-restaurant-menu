@@ -1,6 +1,6 @@
 import {menuArray} from '/data.js'
-const orderArray = []
-const orderPriceArray = []
+let orderArray = []
+let orderPriceArray = []
 
 menuArray.forEach(item => {
     document.getElementById('order-menu').innerHTML += `
@@ -50,34 +50,32 @@ function removeItemFromOrder(itemId) {
 }
 
 function renderOrder() {
-    if(orderArray.length > 0) {
-        const totalPrice = orderPriceArray.reduce((totalPrice, currentPrice) => {
-            return totalPrice + currentPrice
-        })
-        document.getElementById('order-item').innerHTML = `
-            <h2>Your Order</h2>
-            <div id="order-wrapper" class="order-wrapper"></div>
+    const totalPrice = orderPriceArray.reduce((totalPrice, currentPrice) => {
+        return totalPrice + currentPrice
+    })
+    document.getElementById('order-item').innerHTML = `
+        <h2>Your Order</h2>
+        <div id="order-wrapper" class="order-wrapper"></div>
+        <div class="order-wrapper__item">
+            <p>Total price:</p>
+            <p class="order-wrapper__item-price">$${totalPrice}</p>
+        </div>
+        <button id="order-btn" class="order-wrapper__btn">Complete order</button>
+    `
+    orderArray.forEach(item => {
+        document.getElementById('order-wrapper').innerHTML += `
             <div class="order-wrapper__item">
-                <p>Total price:</p>
-                <p class="order-wrapper__item-price">$${totalPrice}</p>
-            </div>
-            <button id="order-btn" class="order-wrapper__btn">Complete order</button>
-        `
-        orderArray.forEach(item => {
-            document.getElementById('order-wrapper').innerHTML += `
-                <div class="order-wrapper__item">
-                    <div class="order-wrapper__content">
-                        <p>${item.name}</p>
-                        <button data-remove-item="${item.id}" class="order-wrapper__item-btn">remove</button>
-                    </div>
-                    <p class="order-wrapper__item-price">$${item.price}</p>
+                <div class="order-wrapper__content">
+                    <p>${item.name}</p>
+                    <button data-remove-item="${item.id}" class="order-wrapper__item-btn">remove</button>
                 </div>
-            `
-        })
-    }
+                <p class="order-wrapper__item-price">$${item.price}</p>
+            </div>
+        `
+    })
 
     document.getElementById('order-btn').addEventListener('click', () => {
-        renderPaymentModal()
+         renderPaymentModal()
     })
 }
 
@@ -87,7 +85,7 @@ function renderPaymentModal() {
             <h1 class="payment-modal__heading">Enter card details</h1>
             <form>
                 <label>Card older fullname
-                    <input type="text" id="" name="card-name" required />
+                    <input type="text" id="input-el" name="card-name" required />
                 </label>
                 <label>Card number
                     <input type="text" id="" name="card-number" minlength="15" maxlength="15" required />
@@ -99,26 +97,22 @@ function renderPaymentModal() {
             </form>
         </div>
     `
-    document.getElementById('btn').addEventListener('click', () => {
-        preventDefault()
+
+    document.getElementById('btn').addEventListener('click', (e) => {
+        e.preventDefault()
         orderCompleted()
-        console.log('Order completed')
-        // document.getElementById('payment-modal').classList.remove('d-none')
-    })
+        setTimeout(function() {
+                location.reload()
+            }, 5000)
+        })
 }
 
-function orderCompleted() {
+    function orderCompleted() {
+    const inputValue = document.getElementById('input-el').value
     setTimeout(function() {
         document.getElementById('order-item').innerHTML = `
-        <p style="color: black">Thanks, James! Your order is on its way!</p>
+        <p style="color: black">Thanks, ${inputValue}! Your order is on its way!</p>
         `
+        document.getElementById('payment-modal').classList.add('d-none')
     }, 1500)
-
-    // renderOrder()
-}
-
-
-
-function preventDefault(e) {
-    e.preventDefault()
 }
