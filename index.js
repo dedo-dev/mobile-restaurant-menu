@@ -112,7 +112,7 @@ function orderCompletedMessage() {
     setTimeout(function() {
         document.getElementById('order-item').innerHTML = `
             <div class="order-completed">
-                <p class="order-completed__message">Thanks, ${inputValue}! Your order is on its way!</p>
+                <p class="order-completed">Thanks, ${inputValue}! Your order is on its way!</p>
             </div>
         `
         document.getElementById('payment-modal').classList.add('d-none')
