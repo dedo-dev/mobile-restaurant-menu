@@ -29,7 +29,7 @@ h2 {
 }
 
 main {
-    padding: 2em;
+    padding: 2em 1.2em;
 }
 
 .order-menu {
@@ -73,6 +73,7 @@ main {
 }
 
 .menu__btn {
+    flex-shrink: 0;
     background: transparent;
     color: #3C3C3C;
     width: 3.125rem;
@@ -145,7 +146,7 @@ main {
     background: #ffff;
     margin: auto;
     font-family: 'Verdana', sans-serif;
-    max-width: 23.5rem;
+    max-width: clamp(19rem, 42vi + 10rem, 31rem);
     padding: 1.875em 1.5em;
     border-radius: .25rem;
     -webkit-box-shadow: 5.19px 5.19px 255px 0px rgba(60, 60, 60, 1);
@@ -191,6 +192,17 @@ main {
     color: #fff;
     font-size: 1rem;
     font-weight: bold;
+}
+
+.order-completed {
+    background: #ECFDF5;
+    padding: 1.5em;
+    text-align: center;
+}
+
+.order-completed__message {
+    font-size: 1.5rem;
+    color: #3C3C3C;
 }
 
 .d-none {
