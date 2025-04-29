@@ -11,14 +11,14 @@ menuArray.forEach(item => {
                 <h4 class="menu__ingredient">${item.ingredients.join(', ')}</h4>
                 <p class="menu__price">$${item.price}</p>
             </div>
-            <button data-add-item="${item.id}" id="menu-btn" class="menu__btn">+</button>
+            <button data-add-item="${item.id}" class="menu__btn">+</button>
         </article>
     `
 })
 
 document.addEventListener('click', function(e) {
     if(e.target.dataset.addItem) {
-        getItem(e.target.dataset.addItem)
+        addItemToOrder(e.target.dataset.addItem)
         renderOrder()
     }
 
@@ -30,7 +30,7 @@ document.addEventListener('click', function(e) {
     }
 })
 
-function getItem(itemId) {
+function addItemToOrder(itemId) {
     const targetOrderObj = menuArray.filter(function(item) {
         return item.id === Number(itemId)
     })[0]
@@ -54,7 +54,7 @@ function renderOrder() {
         return totalPrice + currentPrice
     })
     document.getElementById('order-item').innerHTML = `
-        <h2>Your Order</h2>
+        <h2 class="order-item__heading">Your Order</h2>
         <div id="order-wrapper" class="order-wrapper"></div>
         <div class="order-wrapper__item">
             <p>Total price:</p>
@@ -83,15 +83,15 @@ function renderPaymentModal() {
     document.querySelector('main').innerHTML += `
         <div id="payment-modal" class="payment-modal">
             <h1 class="payment-modal__heading">Enter card details</h1>
-            <form>
+            <form class="payment-modal__form">
                 <label>Card older fullname
-                    <input type="text" id="input-el" name="card-name" required />
+                    <input class="payment-modal__input" type="text" id="input-el" name="card-name" required />
                 </label>
                 <label>Card number
-                    <input type="text" id="" name="card-number" minlength="15" maxlength="15" required />
+                    <input class="payment-modal__input" type="text" id="" name="card-number" minlength="15" maxlength="15" required />
                 </label>
                 <label>CVV number
-                    <input type="text" id="" name="card-cvv" minlength="3" maxlength="3" required />
+                    <input class="payment-modal__input" type="text" id="" name="card-cvv" minlength="3" maxlength="3" required />
                 </label>
                 <button class="payment-modal__btn" id="btn">Pay</button>
             </form>
@@ -100,14 +100,14 @@ function renderPaymentModal() {
 
     document.getElementById('btn').addEventListener('click', (e) => {
         e.preventDefault()
-        orderCompleted()
+        orderCompletedMessage()
         setTimeout(function() {
-                location.reload()
-            }, 5000)
-        })
+            location.reload()
+        }, 5000)
+    })
 }
 
-    function orderCompleted() {
+function orderCompletedMessage() {
     const inputValue = document.getElementById('input-el').value
     setTimeout(function() {
         document.getElementById('order-item').innerHTML = `

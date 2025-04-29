@@ -32,7 +32,7 @@ main {
     padding: 2em;
 }
 
-#order-menu {
+.order-menu {
     display: flex;
     flex-direction: column;
     gap: 2.375rem;
@@ -83,12 +83,12 @@ main {
     border-radius: 99px;
 }
 
-#order-item {
+.order-item {
     margin-block-start: 2.375rem;
     font-size: 1.75rem;
 }
 
-#order-item > h2 {
+.order-item__heading {
     color: #3C3C3C;
     margin-block-end: 3rem;
     text-align: center;
@@ -138,8 +138,6 @@ main {
     font-size: 1.25rem;
 }
 
-/* MODAL PAYMENT */
-
 .payment-modal {
     position: fixed;
     inset: 0;
@@ -163,18 +161,18 @@ main {
     text-align: center;
 }
 
-.payment-modal form  {
+.payment-modal__form  {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
 }
 
-.payment-modal form > label {
+.payment-modal__form label {
     color: #8B8B8B;
     font-size: .75rem;
 }
 
-.payment-modal form > label > input {
+.payment-modal__input {
     width: 100%;
     height: 2.5rem;
     display: block;
@@ -194,8 +192,6 @@ main {
     font-size: 1rem;
     font-weight: bold;
 }
-
-
 
 .d-none {
     display: none;
